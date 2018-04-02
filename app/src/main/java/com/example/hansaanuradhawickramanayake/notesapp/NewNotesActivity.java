@@ -12,48 +12,48 @@ public class NewNotesActivity extends AppCompatActivity {
 
     EditText newNotesEditText;
 
+
+    static String  note;
+    static int noteId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_notes);
 
+        newNotesEditText = findViewById(R.id.newNotesEditText);
 
 
         Intent intent = getIntent();
-        String intentData = intent.getStringExtra("note");
+        note = intent.getStringExtra("note");
+        noteId = intent.getIntExtra("noteId", -1);
+        Toast.makeText(this, Integer.toString(noteId), Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, intentData, Toast.LENGTH_SHORT).show();
+        newNotesEditText.setText(note);
 
 
-        //newNotesEditText.setText(intentData);
     }
 
     @Override
     public void onBackPressed()
     {
 
-        newNotesEditText = findViewById(R.id.newNotesEditText);
-
-
-        String newNotes = newNotesEditText.getText().toString();
-
-
-            if (newNotes.equals("")){
-
-                Toast.makeText(this, "Your note is empty", Toast.LENGTH_SHORT).show();
-
-            } else {
-
-                MainActivity.notesArrayList.add(newNotes);
-
-                MainActivity.arrayAdapter.notifyDataSetChanged();
-
-                Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
-
-            }
-
-
         super.onBackPressed();
+
+        if (note.equals("") && noteId == -1){
+
+
+            MainActivity.notesArrayList.add(newNotesEditText.getText().toString());
+
+        } else if (!note.equals("") && noteId != -1){
+
+            MainActivity.notesArrayList.set(noteId,newNotesEditText.getText().toString());
+
+
+        }
+        MainActivity.arrayAdapter.notifyDataSetChanged();
+
+        Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
+
 
 
     }

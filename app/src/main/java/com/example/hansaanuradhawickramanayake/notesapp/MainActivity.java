@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<String> notesArrayList;
     static ArrayAdapter<String> arrayAdapter;
 
-    static String tappedNote = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                tappedNote = notesArrayList.get(position).toString();
-
-                goToNewActivity(tappedNote);
+                goToNewActivity(notesArrayList.get(position), position);
             }
         });
 
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.newNotes :
-                goToNewActivity("");
+                goToNewActivity("", -1);
                 return true;
 
             default:
@@ -111,11 +108,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void goToNewActivity(String note){
+    public void goToNewActivity(String note,int noteId){
 
         Intent intent = new Intent(MainActivity.this, NewNotesActivity.class);
         intent.putExtra("note", note);
+        intent.putExtra("noteId", noteId);
         startActivity(intent);
+
     }
 
 
