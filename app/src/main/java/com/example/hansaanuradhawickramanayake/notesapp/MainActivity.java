@@ -1,7 +1,9 @@
 package com.example.hansaanuradhawickramanayake.notesapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayAdapter<String> arrayAdapter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         notesListView = findViewById(R.id.notesListView);
 
+
         notesArrayList = new ArrayList<>();
         notesArrayList.add("Example note");
 
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, notesArrayList);
 
         notesListView.setAdapter(arrayAdapter);
-
-
 
         notesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
